@@ -88,3 +88,46 @@ contract simpleCoin {
         balanceOf[receiver] += amount;
     }
 }
+
+
+
+
+// Arrays
+pragma solidity ^0.8.0;
+
+contract arrays{
+
+    uint[] public number;
+
+    function addNumber(uint num)public{
+        number.push(num);
+    }
+
+    function addSize()public returns(uint){
+        return number.length;
+    }
+
+     function removeItem(uint index)public returns(uint){
+        delete number[index];
+    }
+
+}
+
+
+
+// Struct is just like a Object in javaScipt
+pragma solidity ^0.8.0;
+
+contract Team{
+
+    Player[] public players;
+
+    struct Player{
+        string firstName;
+        string lastName;
+        uint age;
+    }
+    function addPlayer(string memory _firstName, string memory _lastName, uint memory _age)public{
+        players.push( Player(_firstName, _lastName, _age) );
+    }
+}
