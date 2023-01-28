@@ -131,3 +131,29 @@ contract Team{
         players.push( Player(_firstName, _lastName, _age) );
     }
 }
+
+
+
+// Error Handling using require
+pragma solidity ^0.8.6;
+
+contract Bank{
+    mapping(address => uint) balance;
+
+    function checkBalance()public view returns(uint){
+        return balance[msg.sender];
+    }
+    
+    function addBalance(uint _toAdd)public returns (uint){
+        balance[msg.sender] += _toAdd;
+        return balance[msg.sender];
+    }
+
+    function transfer(address receiverAddress, uint amount) public {
+        require(balance[msg.sender] >= amount , "you dont have enough balance to transfer");
+        require(msg.sender != receiverAddress, "you dont have send tokens in your own wallet!");
+        balance[msg.sender] -= amount;
+        balance[receiverAddress] += amount;
+    }
+
+}
