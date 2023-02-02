@@ -179,7 +179,7 @@ contract Bank{
         return balance[msg.sender];
     }
     
-    function addBalance(uint _toAdd)public returns owner (uint){
+    function addBalance(uint _toAdd)public owner returns(uint) {
         balance[msg.sender] += _toAdd;
         return balance[msg.sender];
     }
