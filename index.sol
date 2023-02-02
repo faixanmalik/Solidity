@@ -157,3 +157,44 @@ contract Bank{
     }
 
 }
+
+
+
+// Error Handling using assert and modifier
+pragma solidity ^0.8.6;
+
+contract Bank{
+    mapping(address => uint) balance;
+
+    address ownerAddress;
+
+    //  modifier is used for assigning the owner for contract
+    modifier owner{
+        require( ownerAddress == msg.sender, "Sorry you are not the owner" );
+        _;
+    }
+
+
+    function checkBalance()public view returns(uint){
+        return balance[msg.sender];
+    }
+    
+    function addBalance(uint _toAdd)public returns owner (uint){
+        balance[msg.sender] += _toAdd;
+        return balance[msg.sender];
+    }
+
+    function transfer(address receiverAddress, uint amount) public owner {
+        require(balance[msg.sender] >= amount , "you dont have enough balance to transfer");
+        require(msg.sender != receiverAddress, "you dont have send tokens in your own wallet!");
+
+        uint previousBalance = balance[msg.sender];
+
+        balance[msg.sender] -= amount;
+        balance[receiverAddress] += amount;
+
+        //  assert use hta ha kah paisy transfer krny ka bad kia balance zada kam to ni ho gya
+        assert(balance[msg.sender] == previousBalance - amount );
+    }
+
+}
